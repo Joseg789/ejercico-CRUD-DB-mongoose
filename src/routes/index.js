@@ -43,6 +43,33 @@ router.put("/tasks/:id", async (req, res) => {
   console.log(" actualizado correctamente", task);
 });
 
+//PUT /markAsCompleted/:_id:
+
+router.put("/tasks/markAsCompleted/:_id", async (req, res) => {
+  const task = await Task.findById(req.params._id);
+  if (!task) {
+    throw new Error("Bad Request! task not found");
+  }
+  //actualizamos
+  task.completed = !task.completed;
+  await task.save();
+  res.send("Actualizado Correctamente");
+  console.log(" actualizado correctamente", task);
+});
+
+//PUT /id/:_id
+router.put("/tasks/id/:id", async (req, res) => {
+  const task = await Task.findById(req.params.id);
+  if (!task) {
+    throw new Error("Bad Request! task not found");
+  }
+  //actualizamos
+  task.title = req.body.title;
+  await task.save();
+  res.send("Actualizado Correctamente");
+  console.log(" actualizado correctamente", task);
+});
+
 router.delete("/tasks/:id", async (req, res) => {
   const task = await Task.findById(req.params.id);
   if (!task) {
